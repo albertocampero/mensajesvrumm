@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="pragma" content="no-cache">
+        <link rel ="icon" href="favicon.png">
+        <title>Mensajes | Vrumm</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="css/trix.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div class="container">
+                    <img src="images/logo_gray.png" class="img-responsive" alt="" />
+                    <h5 class="text-center">Mensajes</h5>
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="./">Ver todo</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" id="logout"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <main>
+				<div class="container">
+					<hr>
+                    <ol class="breadcrumb">
+                        <li><a href="./"><i class="fa fa-fw fa-home"></i> Inicio</a></li>
+                        <li class="active" id="breadcrumb-active">Nuevo mensaje</li>
+                    </ol>
+                    <form id="form-compose" class="hidden">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="input-title">Titulo</label>
+                                    <input type="text" class="form-control input-sm" id="input-title">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="select-brand">Marca</label>
+                                    <select class="form-control input-sm" id="select-brand">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="select-type">Tipo</label>
+                                    <select class="form-control input-sm" id="select-type">
+                                        <option value="">Seleccione</option>
+                                        <option value="Vrumm">Vrumm</option>
+                                        <option value="Agencia">Agencia</option>
+                                        <option value="Por definir">Por definir</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block" id="btn-submit" data-loading-text="<i class='fa fa-cog fa-spin fa-fw'></i> Guardando...">Comenzar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="block-work-area" class="hidden">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="work-area">
+                                    <h1 id="master-title"></h1>
+                                    <ul id="sortable">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2" id="col-control">
+                                <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-text">Texto</a>
+                                <br>
+                                <a href="#" class="btn btn-primary btn-block" id="upload-trigger">Imagen</a>
+                                <progress value="0" max="100" id="uploader"></progress>
+                                <br>
+                                <a href="#" class="btn btn-primary btn-block" id="save-message">Guardar</a>
+                                <div class="hidden">
+                                    <input type="file" id="input-file" accept="image/*" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				    <hr>
+				</div>
+			</main>            
+        </div>
+        <footer>
+            <div class="container">
+                <h6 class="text-center">&copy; 2017 Vrumm México. Todos los derechos reservados.</h6>
+            </div>
+        </footer>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modal-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Texo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input id="text-content" type="hidden">
+                        <trix-toolbar id="content-toolbar"></trix-toolbar>
+                        <trix-editor toolbar="content-toolbar" input="text-content" class="form-control input-sm"></trix-editor>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="add-text">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+        <script src="js/trix.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/moment.min.js"></script>
+        <script src="js/datetime-moment.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="js/firebase.config.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>

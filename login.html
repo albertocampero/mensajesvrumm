@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="pragma" content="no-cache">
+        <title>Vrumm</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <style>
+            body {
+                background: #f7f7f7;
+                font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+                color: #a3a3a3;
+                font-size: 13px;
+                font-weight: 400;
+                line-height: 1.471;
+            }
+            #loginform {
+                margin-top: 60px;
+                padding: 20px;
+            }
+            #loginform img {
+                margin: 0 auto;
+            }
+            .form-control {
+                color: #777;
+            }
+            #loginform input, #loginform button {
+                border-radius: 3px;
+                margin-top: 15px;
+            }
+            .alert {
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-2"></div>
+                <div class="col-md-4 col-sm-8">
+                    <form id="loginform">
+                        <img src="images/logo_gray.png" class="img-responsive" alt="" />
+                        <h5 class="text-center">Mensajes</h5>
+                        <div class="alert alert-danger text-center hidden" id="errormsg" role="alert">
+                            <strong>Error! </strong><span></span>
+                        </div>
+                        <input type="email" id="email" class="form-control" placeholder="Correo electrónico" required autofocus />
+                        <input type="password" id="password" class="form-control" placeholder="Contraseña" required />
+                        <button type="submit" id="login" class="btn btn-primary btn-block">Entrar</button>
+                    </form>
+                </div>
+                <div class="col-md-4 col-sm-2"></div>
+            </div>
+        <div>
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/firebase.config.js"></script>
+        <script>
+            // Sign Up
+            $('#loginform').on('submit', function(e) {
+                const email = $('#email').val();
+                const password = $('#password').val();
+                const auth = firebase.auth();
+                const promise = auth.signInWithEmailAndPassword(email, password);
+
+                promise.catch( function(e) {
+                    $('#errormsg').removeClass('hidden').find('span').html(e.message);
+                    console.log(e.code + ' ' + e.message)
+                });
+                return false;
+            });
+            // realtime listener
+            firebase.auth().onAuthStateChanged( function(firebaseUser){
+                if (firebaseUser) {
+                    window.location = './';
+                }
+            });
+        </script>
+    </body>
+</html>
