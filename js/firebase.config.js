@@ -1,4 +1,3 @@
-/*
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAjZyoIDgN2JkfCXFFlXuDZvV3oE1p9NBc",
@@ -7,7 +6,8 @@ var config = {
     storageBucket: "vrumm-b37f5.appspot.com",
     messagingSenderId: "1010462600633"
 };
-firebase.initializeApp(config);*/
+firebase.initializeApp(config);
+/*
 // initialize firebase
 var config = {
     apiKey: "AIzaSyDsgFaY0asiJnLU7ukvDib7-5ljbD9e0kw",
@@ -17,3 +17,4 @@ var config = {
     messagingSenderId: "304122524358"
 };
 firebase.initializeApp(config);
+*/

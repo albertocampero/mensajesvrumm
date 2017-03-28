@@ -1,21 +1,27 @@
-function post() {
-    var jsondata = JSON.stringify( { 'to' : 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'notification' : { 'title' : 'vrummapp.net', 'body'  : 'Nuevo mensaje', 'icon'  : 'new' }, 'data' : { 'date'      : '23/03/17', 'contents'  : 'http://vrummapp.net/msg/view/21659772' } } );
-    $.ajax({
-        type : 'POST',
-        url : "https://fcm.googleapis.com/fcm/send",
-        headers : {
-            Authorization : 'key=AIzaSyBstTnhwWMqcdJlsE-8QynkxocDXzN9ORU'
+function post(idMessage) {
+    var key = 'AIzaSyBstTnhwWMqcdJlsE-8QynkxocDXzN9ORU';
+    var to = 'dpD32B25tIo:APA91bEioWyhcKtCOES-XS0hHELEW_aXAPYVsQg0uXTsmfxcBGNfTV6yPdAdz0qqNODPqUVLrPRUh9CtZAKcH4ofTEPGM64pLvcI51rDHCl99sRPpSNx7OZrQHc9H9PIT8pO1tOxyrlo';
+    var notification = {
+        'title': 'Portugal vs. Denmark',
+        'body': '5 to 1',
+        'icon': 'firebase-logo.png',
+        'click_action': 'https://vrumm-b37f5.firebaseapp.com/'
+    };
+    fetch('https://fcm.googleapis.com/fcm/send', {
+        'method': 'POST',
+        'headers': {
+            'Authorization': 'key=' + key,
+            'Content-Type': 'application/json'
         },
-        contentType : 'application/json',
-        dataType: 'json',
-        data: jsondata,
-        success : function(response) {
-            console.log(response);
-        },
-        error : function(xhr, status, error) {
-            console.log('error');
-        }
-    });
+        'body': JSON.stringify({
+            'notification': notification,
+            'to': to
+        })
+    }).then(function(response) {
+        console.log(response);
+    }).catch(function(error) {
+        console.error(error);
+    })
 };
 // function to get date time
 function getDateTime() {
@@ -178,7 +184,16 @@ $('body').on('click', '.show-modal-detail', function(e) {
 // on send click; send push
 $('body').on('click', '.btn-send-push', function(e) {
     e.preventDefault();
-    post();
+
+    var id = $(this).data('id');
+    post(id);
+
+    var dateTime = getDateTime();
+    var date = dateTime[1];
+
+    sendRef = msgRef.child(id).update({
+        enviado: date
+    });
 
     // envio de datos y marcar como enviado
     /*
